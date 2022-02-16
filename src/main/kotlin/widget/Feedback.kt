@@ -1,20 +1,7 @@
 package widget
 
-import jakarta.persistence.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Table
 
-@Entity
-@Table(name="FEEDBACK")
-class Feedback {
-
-    //Id : primary key
-    @Id @GeneratedValue
-    val Id: Int,
-
-    //Wertung : ganzzahl 1-5
-    @Column(nullable = false)
-    val rating : Int,
-    
-    //Frei text
-    @Column(nullable = false)
-    val text: String
-}
+@Table("FEEDBACK")
+data class Feedback(@Id val id: Int, val rating: Int, val text: String)

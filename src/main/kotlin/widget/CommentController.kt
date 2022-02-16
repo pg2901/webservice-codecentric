@@ -3,30 +3,19 @@ package widget
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
-import jakarta.persistence.*
+import org.springframework.web.bind.annotation.RequestBody
 
-@Controller
-class CommentController {
+@RestController
+class CommentController(val service: FeedbackService) {
 
     @GetMapping("/comments")
-    fun showAll() {
-        //get all feedbacks from databank and display
-
-        //EntityManager erzeugen
-        val emf = Persistence.createEntityManagerFactory("MyJPAConfig")
-        val em = emf.createEntityManager()
-
-        //JPQL Query erzeugen
-        val query = em.createQuery("select * from feedback")
-        val list = query.getResultList()
-
-        //Alle zurückgeben
-        return list
+    fun sendAll() {
+        return service.findAll();
     }
 
     @PostMapping("/comments")
-    fun saveFeedback() {
-
+    fun saveFeedback(@RequestBody feedback: Feedback) {
+        service.post(feedback)
     }
 
 }
